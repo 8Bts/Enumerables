@@ -88,6 +88,20 @@ module Enumerable
     end  
     arr
   end
+
+  def my_inject(initial = self[0], sym = nil)
+    acc = initial
+    if block_given?
+      self.my_each_with_index do |elem, index|
+        acc = yield(acc, elem) if index > 0
+      end  
+    elsif sym
+      if acc.respond_to? sym
+        self.my_each { |elem| acc = acc.send(sym, elem) }
+      end
+    end   
+    acc
+  end
   
 end
 

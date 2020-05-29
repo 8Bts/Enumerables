@@ -136,3 +136,6 @@ puts [1, 2, 3, 4, 5].my_map proc { |elem| elem * 3 }
 
 puts 'my_inject:'
 puts multiply_els([1, 2, 3, 4, 5])
+
+# rubocop:enable Style/CaseEquality
+# rubocop:enable Lint/AmbiguousBlockAssociation

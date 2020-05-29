@@ -75,6 +75,19 @@ module Enumerable
     end
     sum
   end
+
+  def my_map( obj = nil )
+    arr = []
+    if Proc === obj
+      p "proc called"
+      self.my_each { |elem| arr << obj.call(elem) }
+    elsif block_given?
+      self.my_each { |elem| arr << yield(elem) }
+    else
+      to_enum(__method__)
+    end  
+    arr
+  end
   
 end
 

@@ -60,7 +60,21 @@ module Enumerable
   def my_none?(pattern = nil)
     return !self.my_any?(pattern) if (block_given? == false && pattern)
     !self.my_any? { |elem| block_given?? yield(elem): elem }
-  end  
+  end
+  
+  def my_count(item = nil)
+    sum = 0
+    self.my_each do |elem| 
+      if item
+        sum += 1 if elem == item
+      elsif block_given?
+        sum += 1 if yield(elem)
+      else
+        sum+=1
+      end      
+    end
+    sum
+  end
   
 end
 

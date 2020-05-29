@@ -19,6 +19,17 @@ module Enumerable
         end     
       end  
     end
+
+    def my_select
+        arr = []
+        if block_given?
+          self.my_each do | elem |   
+            arr << elem if yield(elem)
+          end
+        else to_enum(__method__)
+        end
+        arr  
+      end
   
 end
 

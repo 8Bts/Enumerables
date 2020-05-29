@@ -31,6 +31,8 @@ module Enumerable
     arr  
   end
 
+  
+  
   def my_all?(pattern = nil)
     if block_given?
       self.my_each { |elem| return false unless yield(elem) }
@@ -43,14 +45,14 @@ module Enumerable
     true
 
   end
-    
+  
   def my_any?(pattern = nil)
     if block_given?
-        self.my_each { |elem| return true if yield(elem) }
+      self.my_each { |elem| return true if yield(elem) }
     elsif pattern
-        self.my_each { |elem| return true if pattern === elem } 
+      self.my_each { |elem| return true if pattern === elem } 
     else
-        self.my_each { |elem| return true if elem }
+      self.my_each { |elem| return true if elem }
     end
 
     false
@@ -60,8 +62,8 @@ module Enumerable
   def my_none?(pattern = nil)
     return !self.my_any?(pattern) if (block_given? == false && pattern)
     !self.my_any? { |elem| block_given?? yield(elem): elem }
-  end
-  
+  end  
+
   def my_count(item = nil)
     sum = 0
     self.my_each do |elem| 
@@ -75,7 +77,7 @@ module Enumerable
     end
     sum
   end
-
+  
   def my_map( obj = nil )
     arr = []
     if Proc === obj
@@ -88,6 +90,7 @@ module Enumerable
     end  
     arr
   end
+  
 
   def my_inject(initial = self[0], sym = nil)
     acc = initial
@@ -102,11 +105,39 @@ module Enumerable
     end   
     acc
   end
-  
+
 end
 
 def multiply_els(arr)
-  #arr.my_inject(1, :*)
-  arr.my_inject { |acc, elem| acc*elem }
+    #arr.my_inject(1, :*)
+    arr.my_inject { |acc, elem| acc*elem }
 end
-  
+
+#  =====   Method tests =====
+
+puts "my_each :"
+[1,2,3,4,5].my_each { |elem| p elem*2 }
+
+puts "my_each_with_index:"
+[1,2,3,4,5].my_each_with_index { |elem, index| p "#{elem} index #{index}" }
+
+puts "my_select:"
+puts [1,2,3,4,5].my_select { |elem| elem % 2 == 0 }
+
+puts "my_all?:"
+puts [1,2,3,4,5].my_all? { |elem| elem < 6 }
+
+puts "my_any?:"
+puts [1,2,3,4,5].my_any? { |elem| elem == 3 }
+
+puts "my_none?:"
+puts [1,2,3,4,5].my_none? { |elem| elem > 5 }
+
+puts "my_count:"
+puts [1,2,3,4,5].my_count { |elem| elem % 3 == 0 }
+
+puts "my_map:"
+puts [1,2,3,4,5].my_map proc { |elem| elem*3 }
+
+puts "my_inject:"
+puts multiply_els([1,2,3,4,5])

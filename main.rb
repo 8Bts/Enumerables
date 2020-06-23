@@ -3,13 +3,8 @@
 
 module Enumerable
   def my_each
-    size.times do |counter|
-      if block_given?
-        yield(self[counter])
-        self
-      else to_enum(__method__)
-      end
-    end
+    size.times { |counter| yield(self[counter]) } if block_given?
+    return block_given?? self : to_enum(__method__)
   end
 
   def my_each_with_index

@@ -91,12 +91,12 @@ describe Enumerable do
     end
 
     it 'returns true if the pattern was passed instead and ever returns true' do
-      arr = ["a", 2, "s", 4]
+      arr = ['a', 2, 's', 4]
       expect(arr.my_any?(Numeric)).to be_truthy
     end
 
     it 'returns false if the pattern was passed instead and it is never true' do
-      arr = ["a", "b", "c", "c"]
+      arr = %w[a b c c]
       expect(arr.my_any?(Numeric)).not_to be_truthy
     end
 
@@ -123,12 +123,12 @@ describe Enumerable do
     end
 
     it 'returns true if the pattern was passed instead and is never true' do
-      arr = ["a", "b", "s", "x"]
+      arr = %w[a b s x]
       expect(arr.my_none?(Numeric)).to be true
     end
 
     it 'returns false if the pattern was passed instead and it is ever true' do
-      arr = ["a", "b", 2, "r"]
+      arr = ['a', 'b', 2, 'r']
       expect(arr.my_none?(String)).to eql false
     end
 
@@ -140,6 +140,23 @@ describe Enumerable do
     it 'returns false if the block is not given and any of the elements of the collection is true' do
       arr = [2, 3]
       expect(arr.my_none?).to eql false
+    end
+  end
+
+  describe '#my_count' do
+    it 'returns number of items if neither block nor an argument is given' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_count).to eql(5)
+    end
+
+    it 'when argument passed returns the number of items equal to argument in the collection' do
+      arr = [1, 2, 2, 4, 5]
+      expect(arr.my_count(2)).to eql(2)
+    end
+
+    it 'return number of elements yielding true when block is given' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_count(&:even?)).to eql(2)
     end
   end
 end

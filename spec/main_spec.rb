@@ -78,4 +78,68 @@ describe Enumerable do
       expect(arr.my_all?).to be_falsey
     end
   end
+
+  describe '#my_any?' do
+    it 'returns true if the block ever returns true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_any? { |elem| elem > 2 }).to be_truthy
+    end
+
+    it 'returns false if the block never returns true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_any? { |elem| elem > 4 }).not_to be_truthy
+    end
+
+    it 'returns true if the pattern was passed instead and ever returns true' do
+      arr = ["a", 2, "s", 4]
+      expect(arr.my_any?(Numeric)).to be_truthy
+    end
+
+    it 'returns false if the pattern was passed instead and it is never true' do
+      arr = ["a", "b", "c", "c"]
+      expect(arr.my_any?(Numeric)).not_to be_truthy
+    end
+
+    it 'returns true if the block is not given and any of the elements of the collection are true' do
+      arr = [false, 2, 3, false]
+      expect(arr.my_any?).to be_truthy
+    end
+
+    it 'returns false if the block is not given and all of the elements of the collection are false or nil' do
+      arr = [false, false]
+      expect(arr.my_any?).not_to be_truthy
+    end
+  end
+
+  describe '#my_none?' do
+    it 'returns true if the block is never true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_none? { |elem| elem > 5 }).to eql true
+    end
+
+    it 'returns false if the block ever is true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_none? { |elem| elem > 3 }).to eql false
+    end
+
+    it 'returns true if the pattern was passed instead and is never true' do
+      arr = ["a", "b", "s", "x"]
+      expect(arr.my_none?(Numeric)).to be true
+    end
+
+    it 'returns false if the pattern was passed instead and it is ever true' do
+      arr = ["a", "b", 2, "r"]
+      expect(arr.my_none?(String)).to eql false
+    end
+
+    it 'returns true if the block is not given and all of the elements of the collection are false' do
+      arr = [false, false]
+      expect(arr.my_none?).to eql true
+    end
+
+    it 'returns false if the block is not given and any of the elements of the collection is true' do
+      arr = [2, 3]
+      expect(arr.my_none?).to eql false
+    end
+  end
 end

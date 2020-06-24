@@ -7,6 +7,7 @@ This project is about creating custom Enumerable instance methods by using procs
 - Ruby 2.5.5p157
 - VS Code
 - Repl.it
+- RSpec
 
 ## Live Demo
 
@@ -20,6 +21,13 @@ This project is about creating custom Enumerable instance methods by using procs
 - Twitter: [@Rasheed49705929](https://twitter.com/Rasheed49705929)
 - Linkedin: [linkedin](https://www.linkedin.com/in/mcmizze-price-238a70135/)
 - Email: mcmizze@yahoo.com
+
+**Tendongze Godson**
+
+- Github: [@tGodson](https://github.com/tGodson) 
+- Twitter: [@Godson](https://twitter.com/tendongze-godson) 
+- Linkedin: [linkedin](https://linkedin.com/in/tendongze95)
+- Email: tendongzegodson@gmail.com
 
 ## 🤝 Contributing
 

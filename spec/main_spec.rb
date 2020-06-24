@@ -45,6 +45,37 @@ describe Enumerable do
       arr = [1, 2, 3, 4]
       expect(arr.my_select.class.name).to eql('Enumerator')
     end
+  end
 
+  describe '#my_all?' do
+    it 'returns true if the condition passed by block is always true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_all? { |elem| elem > 0 }).to be_truthy
+    end
+
+    it 'returns false if the condition passed by block is not always true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_all?(&:even?)).to be_falsey
+    end
+
+    it 'returns true if the pattern was passed instead and it is always true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_all?(Numeric)).to be_truthy
+    end
+
+    it 'returns false if the pattern was passed instead and it is not always true' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_all?(:odd?)).to be_falsey
+    end
+
+    it 'returns true if the block is not given and none of the elements of the collection are false or nil' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_all?).to be_truthy
+    end
+
+    it 'returns false if the block is not given and any of the elements of the collection is false or nil' do
+      arr = [1, 2, 3, false, 4]
+      expect(arr.my_all?).to be_falsey
+    end
   end
 end

@@ -1,5 +1,4 @@
 # rubocop:disable Style/CaseEquality
-# rubocop:disable Lint/AmbiguousBlockAssociation
 
 module Enumerable
   def my_each
@@ -18,8 +17,9 @@ module Enumerable
       my_each do |elem|
         arr << elem if yield(elem)
       end
-    else return to_enum(__method__)
     end
+    return to_enum(__method__) unless block_given?
+
     arr
   end
 
@@ -81,10 +81,11 @@ module Enumerable
 
   def my_inject(initial = self[0], sym = nil)
     acc = initial
-    if block_given?          
+    if block_given?
       my_each_with_index do |elem, index|
         next if index.zero? && initial == self[0]
-        acc = yield(acc, elem) 
+
+        acc = yield(acc, elem)
       end
     elsif sym
       my_each { |elem| acc = acc.send(sym, elem) } if acc.respond_to? sym
@@ -98,34 +99,4 @@ def multiply_els(arr)
   arr.my_inject { |acc, elem| acc * elem }
 end
 
-#  =====   Method tests =====
-
-puts 'my_each :'
-[1, 2, 3, 4, 5].my_each { |elem| p elem * 2 }
-
-puts 'my_each_with_index:'
-[1, 2, 3, 4, 5].my_each_with_index { |elem, index| p "#{elem} index #{index}" }
-
-puts 'my_select:'
-puts [1, 2, 3, 4, 5].my_select(&:even?)
-
-puts 'my_all?:'
-puts [1, 2, 3, 4, 5].my_all? { |elem| elem < 6 }
-
-puts 'my_any?:'
-puts [1, 2, 3, 4, 5].my_any? { |elem| elem == 3 }
-
-puts 'my_none?:'
-puts [1, 2, 3, 4, 5].my_none? { |elem| elem > 5 }
-
-puts 'my_count:'
-puts [1, 2, 3, 4, 5].my_count { |elem| (elem % 3).zero? }
-
-puts 'my_map:'
-puts [1, 2, 3, 4, 5].my_map proc { |elem| elem * 3 }
-
-puts 'my_inject:'
-puts multiply_els([1, 2, 3, 4, 5])
-
 # rubocop:enable Style/CaseEquality
-# rubocop:enable Lint/AmbiguousBlockAssociation

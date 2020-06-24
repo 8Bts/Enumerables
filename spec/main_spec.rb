@@ -176,4 +176,21 @@ describe Enumerable do
       expect(arr.my_map.class.name).to eql('Enumerator')
     end
   end
+
+  describe '#my_inject' do
+    it 'returns accumulated value assigned by block without an initial value' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_inject { |acc, elem| acc + elem }).to eql(15)
+    end
+
+    it 'returns accumulated value assigned by block with an initial value' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_inject(2) { |acc, elem| acc + elem }).to eql(17)
+    end
+
+    it 'returns accumulated value assigned by symbol with an initial value' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_inject(1, :*)).to eql(120)
+    end
+  end
 end

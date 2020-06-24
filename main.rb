@@ -81,9 +81,10 @@ module Enumerable
 
   def my_inject(initial = self[0], sym = nil)
     acc = initial
-    if block_given?
+    if block_given?          
       my_each_with_index do |elem, index|
-        acc = yield(acc, elem) unless index.zero?
+        next if index.zero? && initial == self[0]
+        acc = yield(acc, elem) 
       end
     elsif sym
       my_each { |elem| acc = acc.send(sym, elem) } if acc.respond_to? sym

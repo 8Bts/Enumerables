@@ -14,11 +14,10 @@ module Enumerable
 
   def my_select
     arr = []
-    if block_given?
-      my_each do |elem|
-        arr << elem if yield(elem)
-      end
-    else return to_enum(__method__)
+    return to_enum(__method__) unless block_given?
+
+    my_each do |elem|
+      arr << elem if yield(elem)
     end
     arr
   end
@@ -81,10 +80,11 @@ module Enumerable
 
   def my_inject(initial = self[0], sym = nil)
     acc = initial
-    if block_given?          
+    if block_given?
       my_each_with_index do |elem, index|
         next if index.zero? && initial == self[0]
-        acc = yield(acc, elem) 
+
+        acc = yield(acc, elem)
       end
     elsif sym
       my_each { |elem| acc = acc.send(sym, elem) } if acc.respond_to? sym

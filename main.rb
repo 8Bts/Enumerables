@@ -4,12 +4,12 @@
 module Enumerable
   def my_each
     size.times { |counter| yield(self[counter]) } if block_given?
-    return block_given?? self : to_enum(__method__)
+    block_given? ? self : to_enum(__method__)
   end
 
   def my_each_with_index
     size.times { |counter| yield(self[counter], counter) } if block_given?
-    return block_given?? self : to_enum(__method__)
+    block_given? ? self : to_enum(__method__)
   end
 
   def my_select
@@ -18,7 +18,7 @@ module Enumerable
       my_each do |elem|
         arr << elem if yield(elem)
       end
-    else to_enum(__method__)
+    else return to_enum(__method__)
     end
     arr
   end

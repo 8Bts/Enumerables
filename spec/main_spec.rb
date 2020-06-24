@@ -159,4 +159,21 @@ describe Enumerable do
       expect(arr.my_count(&:even?)).to eql(2)
     end
   end
+
+  describe '#my_map' do
+    it 'returns new array containing elements assigned by proc' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_map(proc { |elem| elem * 2 })).to eql([2, 4, 6, 8, 10])
+    end
+
+    it 'returns new array containing elements assigned by block' do
+      arr = [1, 2, 3, 4, 5]
+      expect(arr.my_map { |elem| elem * 2 }).to eql([2, 4, 6, 8, 10])
+    end
+
+    it 'returns Enumerator if block was not given' do
+      arr = [1, 2, 3, 4]
+      expect(arr.my_map.class.name).to eql('Enumerator')
+    end
+  end
 end

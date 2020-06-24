@@ -70,12 +70,11 @@ module Enumerable
   def my_map(obj = nil)
     arr = []
     if Proc === obj
-      p 'proc called'
       my_each { |elem| arr << obj.call(elem) }
     elsif block_given?
       my_each { |elem| arr << yield(elem) }
     else
-      to_enum(__method__)
+      return to_enum(__method__)
     end
     arr
   end

@@ -11,7 +11,7 @@ This project is about creating custom Enumerable instance methods by using procs
 
 ## Live Demo
 
-<a href="https://repl.it/@8Bts/enumerables#main.rb" target="_blank">Live version</a>
+[![Run on Repl.it](https://repl.it/badge/github/8Bts/Enumerables)](https://repl.it/github/8Bts/Enumerables)
 
 ## Author
 
